@@ -62,7 +62,6 @@ namespace RomanConvert.ConsoleApp
 				{
 					var quotient = n / 100;
 					var digitValue = quotient * 100;
-					var romanNumeral = specialRomanValues[digitValue];
 					switch (digitValue)
 					{
 						case 400:
@@ -78,6 +77,7 @@ namespace RomanConvert.ConsoleApp
 							n -= digitValue;
 							continue;
 					}
+					var romanNumeral = specialRomanValues[digitValue];
 
 					for (var i = 0; i < quotient; i++)
 					{
@@ -91,7 +91,6 @@ namespace RomanConvert.ConsoleApp
 				{
 					var quotient = n / 10;
 					var digitValue = quotient * 10;
-					var romanNumeral = specialRomanValues[digitValue];
 					switch (digitValue)
 					{
 						case 40:
@@ -103,11 +102,11 @@ namespace RomanConvert.ConsoleApp
 							n -= digitValue;
 							continue;
 						case 90:
-							letters.Add("CM");
+							letters.Add("XC");
 							n -= digitValue;
 							continue;
 					}
-
+					var romanNumeral = specialRomanValues[digitValue];
 					for (var i = 0; i < quotient; i++)
 					{
 						letters.Add(romanNumeral);
@@ -120,9 +119,20 @@ namespace RomanConvert.ConsoleApp
 				{
 					var quotient = n / 1;
 					var digitValue = quotient * 1;
-					var romanNumeral = specialRomanValues[digitValue];
 					switch (digitValue)
 					{
+						case 1:
+							letters.Add("I");
+							n -= digitValue;
+							continue;
+						case 2:
+							letters.Add("II");
+							n -= digitValue;
+							continue;
+						case 3:
+							letters.Add("III");
+							n -= digitValue;
+							continue;
 						case 4:
 							letters.Add("IV");
 							n -= digitValue;
@@ -131,26 +141,31 @@ namespace RomanConvert.ConsoleApp
 							letters.Add("V");
 							n -= digitValue;
 							continue;
+						case 6:
+							letters.Add("V");
+							n -= digitValue;
+							continue;
+						case 7:
+							letters.Add("VII");
+							n -= digitValue;
+							continue;
+						case 8:
+							letters.Add("VIII");
+							n -= digitValue;
+							continue;
 						case 9:
 							letters.Add("IX");
 							n -= digitValue;
 							continue;
 					}
 
-					for (var i = 0; i < quotient; i++)
-					{
-						letters.Add(romanNumeral);
-					}
-
-					letters.Add(romanNumeral);
 					n -= quotient;
-
 				}
 
 				count /= 10;
 			}
 			
-			var roman = string.Join(null, letters);
+			var roman = string.Join(null, letters.ToArray());
 			return roman;
 		}
 	}

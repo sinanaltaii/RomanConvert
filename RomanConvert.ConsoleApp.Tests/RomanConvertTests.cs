@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace RomanConvert.ConsoleApp.Tests
 {
-	public class Tests
+	public class RomanConvertTests
 	{
 		[SetUp]
 		public void Setup()
