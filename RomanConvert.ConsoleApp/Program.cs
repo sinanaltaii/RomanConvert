@@ -14,15 +14,6 @@ namespace RomanConvert.ConsoleApp
 			Console.WriteLine($"Are equal {actual.Equals(expected, StringComparison.Ordinal)}");
 		}
 
-		//[TestCase(1, "I")]
-		//[TestCase(2, "II")]
-		//[TestCase(4, "IV")]
-		//[TestCase(500, "D")]
-		//[TestCase(1000, "M")]
-		//[TestCase(1954, "MCMLIV")]
-		//[TestCase(1990, "MCMXC")]
-		//[TestCase(2008, "MMVIII")]
-		//[TestCase(2014, "MMXIV")]
 		public static string Solution(int n)
 		{
 			var letters = new List<string>();
@@ -51,10 +42,25 @@ namespace RomanConvert.ConsoleApp
 				{
 					var quotient = n / 1000;
 					var digitValue = quotient * 1000;
-					var romanNumeral = specialRomanValues[digitValue];
+					switch (digitValue)
+					{
+						case 4000:
+							letters.Add("CD");
+							n -= digitValue;
+							continue;
+						case 5000:
+							letters.Add("D");
+							n -= digitValue;
+							continue;
+						case 900:
+							letters.Add("CM");
+							n -= digitValue;
+							continue;
+					}
+
 					for (var i = 0; i < quotient; i++)
 					{
-						letters.Add(romanNumeral);
+						letters.Add("M");
 					}
 					n -= digitValue;
 				}
@@ -93,6 +99,10 @@ namespace RomanConvert.ConsoleApp
 					var digitValue = quotient * 10;
 					switch (digitValue)
 					{
+						case 10:
+							letters.Add("X");
+							n -= digitValue;
+							continue;
 						case 40:
 							letters.Add("CD");
 							n -= digitValue;
