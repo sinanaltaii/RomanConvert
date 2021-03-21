@@ -11,6 +11,7 @@ namespace RomanConvert.ConsoleApp.Tests
 
 		[TestCase(1, "I")]
 		[TestCase(2, "II")]
+		[TestCase(20, "XX")]
 		[TestCase(4, "IV")]
 		[TestCase(500, "D")]
 		[TestCase(1000, "M")]
@@ -18,6 +19,7 @@ namespace RomanConvert.ConsoleApp.Tests
 		[TestCase(1990, "MCMXC")]
 		[TestCase(2008, "MMVIII")]
 		[TestCase(2014, "MMXIV")]
+		[TestCase(2786, "MMDCCLXXXVI")]
 		public void Test(int value, string expected)
 		{
 			Assert.AreEqual(expected, Program.Solution(value));

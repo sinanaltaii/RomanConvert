@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace RomanConvert.ConsoleApp
 {
@@ -9,7 +7,7 @@ namespace RomanConvert.ConsoleApp
 	{
 		static void Main(string[] args)
 		{
-			var actual =  Solution(1954);
+			var actual = Solution(1954);
 			const string expected = "MCMLIV";
 			Console.WriteLine($"Are equal {actual.Equals(expected, StringComparison.Ordinal)}");
 		}
@@ -17,24 +15,6 @@ namespace RomanConvert.ConsoleApp
 		public static string Solution(int n)
 		{
 			var letters = new List<string>();
-			var specialRomanValues = new Dictionary<int, string>()
-			{
-				{1, "I"},
-				{2, "II"},
-				{3, "III"},
-				{4, "IV"},
-				{5, "V"},
-				{6, "VI"},
-				{7, "VII"},
-				{8, "VIII"},
-				{9, "IX"},
-				{10, "X"},
-				{40, "XL"},
-				{50, "L"},
-				{100, "C"},
-				{1000, "M" }
-			};
-
 			var count = 1000;
 			while (n > 0)
 			{
@@ -83,15 +63,28 @@ namespace RomanConvert.ConsoleApp
 							n -= digitValue;
 							continue;
 					}
-					var romanNumeral = specialRomanValues[digitValue];
 
-					for (var i = 0; i < quotient; i++)
+					const string hundred = "C";
+					if (digitValue < 400)
 					{
-						letters.Add(romanNumeral);
+						for (var i = 0; i < quotient; i++)
+						{
+							letters.Add(hundred);
+						}
+					}
+					else if (digitValue > 500)
+					{
+						var remainder = quotient % 5;
+						var temp = "D";
+						for (var i = 0; i < remainder; i++)
+						{
+
+							temp += hundred;
+						}
+						letters.Add(temp);
 					}
 
-					letters.Add(romanNumeral);
-					n -= quotient;
+					n -= digitValue;
 				}
 				else if (n / 10 > 0)
 				{
@@ -99,12 +92,8 @@ namespace RomanConvert.ConsoleApp
 					var digitValue = quotient * 10;
 					switch (digitValue)
 					{
-						case 10:
-							letters.Add("X");
-							n -= digitValue;
-							continue;
 						case 40:
-							letters.Add("CD");
+							letters.Add("XL");
 							n -= digitValue;
 							continue;
 						case 50:
@@ -116,14 +105,28 @@ namespace RomanConvert.ConsoleApp
 							n -= digitValue;
 							continue;
 					}
-					var romanNumeral = specialRomanValues[digitValue];
-					for (var i = 0; i < quotient; i++)
+
+					const string ten = "X";
+					if (digitValue < 40)
 					{
-						letters.Add(romanNumeral);
+						for (var i = 0; i < quotient; i++)
+						{
+							letters.Add(ten);
+						}
+					}
+					else if (digitValue > 50)
+					{
+						var remainder = quotient % 5;
+						var temp = "L";
+						for (var i = 0; i < remainder; i++)
+						{
+
+							temp += ten;
+						}
+						letters.Add(temp);
 					}
 
-					letters.Add(romanNumeral);
-					n -= quotient;
+					n -= digitValue;
 				}
 				else if (n / 1 > 0)
 				{
@@ -152,7 +155,7 @@ namespace RomanConvert.ConsoleApp
 							n -= digitValue;
 							continue;
 						case 6:
-							letters.Add("V");
+							letters.Add("VI");
 							n -= digitValue;
 							continue;
 						case 7:
@@ -174,7 +177,7 @@ namespace RomanConvert.ConsoleApp
 
 				count /= 10;
 			}
-			
+
 			var roman = string.Join(null, letters.ToArray());
 			return roman;
 		}
